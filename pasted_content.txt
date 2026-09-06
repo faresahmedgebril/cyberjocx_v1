@@ -1,0 +1,1849 @@
+ولا تعب ولا حاجة ❤️
+وبما إنك عايز **كل التعديلات كاملة ومنظمة تحت بعض**، فأنا هتعامل مع الموضوع كأننا بنعمل **CyberJocx V2 Product + Architecture Plan**، مش مجرد شوية تعديلات في الواجهة.
+
+أنا راجعت الكود الحالي كمان، وده مهم لأن عندك بالفعل Roadmap وNEXUS وCourses وLevels وQuizzes وCertificates، فمش هنبدأ من الصفر.
+
+# 🚀 CYBERJOCX V2 — خطة التطوير الكاملة
+
+---
+
+# 1. تغيير فكرة الـRoadmap بالكامل
+
+### ❌ الشكل الحالي
+
+حاليًا الـRoadmap عندك أقرب إلى:
+
+**Track → Levels → Modules → Video → Quiz → Certificate**
+
+وده كويس كبداية، لكن محدود.
+
+### ✅ الشكل الجديد
+
+نحوّلها إلى:
+
+# 🗺️ Interactive Cybersecurity Journey
+
+المستخدم يدخل Track، فيشوف **خريطة رحلة كاملة**.
+
+مثلاً:
+
+```text
+                    🏁 RED TEAM
+                         │
+                         ▼
+                  ┌──────────────┐
+                  │ FOUNDATIONS  │
+                  └──────┬───────┘
+                         │
+             ┌───────────┼───────────┐
+             ▼           ▼           ▼
+          NETWORK       LINUX       PYTHON
+             │           │           │
+             └───────────┼───────────┘
+                         ▼
+                    WEB BASICS
+                         │
+                         ▼
+                  WEB SECURITY
+                   /     |      \
+                  ▼      ▼       ▼
+                XSS     SQLi    AUTH
+                  \      |      /
+                   └─────┼─────┘
+                         ▼
+                       LAB
+                         │
+                         ▼
+                    ASSESSMENT
+                         │
+                         ▼
+                    🔓 LEVEL 2
+```
+
+الخريطة تكون **هي تجربة المستخدم الأساسية**.
+
+---
+
+# 2. كل Node في الخريطة يبقى Skill/Checkpoint
+
+مش Course Card.
+
+مثلاً:
+
+### 🌐 HTTP Fundamentals
+
+الـNode نفسها تظهر على الخريطة.
+
+لما المستخدم يضغط عليها، يفتح:
+
+### Node Details
+
+```text
+HTTP FUNDAMENTALS
+
+Why this matters
+فهم HTTP مطلوب قبل Web Security.
+
+LEARN
+🎓 External Course
+
+PRACTICE
+🧪 CyberJocx Lab
+
+PROVE
+📝 Assessment
+
+STATUS
+2 / 3 completed
+
+UNLOCKS
+🔒 Web Security
+```
+
+---
+
+# 3. أنواع الـNodes
+
+مش كل Node تكون Course.
+
+خلي عندنا:
+
+### 🎓 Course
+
+مصدر تعليمي.
+
+### 🧪 Lab
+
+تطبيق عملي.
+
+### 📝 Assessment
+
+اختبار.
+
+### 📄 Write-up
+
+قراءة أو كتابة تحليل.
+
+### 🏗️ Project
+
+مشروع عملي.
+
+### 🧠 Skill Check
+
+اختبار مستوى.
+
+### 🏆 Achievement
+
+إنجاز.
+
+### 🔐 Gate
+
+بوابة انتقال لمستوى جديد.
+
+---
+
+# 4. Requirements System
+
+كل Node يكون لها Requirements.
+
+مثلاً:
+
+```text
+Web Security
+```
+
+تحتاج:
+
+```text
+✓ HTTP Fundamentals
+✓ Linux Basics
+✓ Networking Basics
+```
+
+ثم:
+
+```text
+SQL Injection
+```
+
+تحتاج:
+
+```text
+✓ Web Security
+✓ HTTP
+```
+
+ثم:
+
+```text
+Advanced Web Exploitation
+```
+
+تحتاج:
+
+```text
+✓ SQLi Lab
+✓ XSS Lab
+✓ Authentication Lab
+✓ Assessment 80%
+```
+
+---
+
+# 5. لا تجعل كل شيء إجباريًا
+
+دي مهمة جدًا.
+
+عندك 3 مستويات:
+
+### 🔴 Required
+
+لازم تخلصه.
+
+### 🟡 Recommended
+
+مستحسن جدًا.
+
+### 🔵 Optional
+
+للتعمق.
+
+عشان المستخدم مايحسش إنه محبوس في شجرة ضخمة.
+
+---
+
+# 6. نظام الـUnlock
+
+مثلاً:
+
+### Level 1
+
+ممكن يبدأ بسهولة.
+
+### Level 2
+
+يحتاج:
+
+**Course + Assessment**
+
+### Level 3
+
+يحتاج:
+
+**Course + Lab + Assessment**
+
+### Level 4
+
+يحتاج:
+
+**Lab + Project + Assessment**
+
+### Advanced
+
+يحتاج:
+
+**Multiple Labs + Capstone**
+
+---
+
+# 7. تغيير مفهوم الكورسات
+
+ودي نقطة مهمة جدًا في رؤيتك.
+
+## CyberJocx مش لازم يعمل كل المحتوى بنفسه.
+
+بدل كده يعمل:
+
+# Learning Resource Aggregation
+
+يعني عندك:
+
+### Internal
+
+محتوى CyberJocx نفسه.
+
+### External
+
+YouTube
+Official documentation
+Free courses
+Open educational resources
+وغيرها.
+
+---
+
+# 8. External Course System
+
+كل مصدر خارجي يبقى:
+
+```text
+Course
+Title
+Provider
+Instructor
+URL
+Language
+Duration
+Level
+Certificate available?
+Verification method
+```
+
+مثلاً:
+
+```text
+Linux Fundamentals
+
+Provider:
+YouTube
+
+Type:
+External Resource
+
+Duration:
+4h 20m
+
+Certificate:
+No
+
+Completion:
+CyberJocx Assessment
+```
+
+---
+
+# 9. نقطة الحقوق مهمة جدًا
+
+أنت فكرتك صح:
+
+**ما تاخدش محتوى حد وتحطه عندك.**
+
+CyberJocx يحتفظ بالرابط فقط، حسب شروط المصدر وصاحب المحتوى.
+
+يعني:
+
+> "اذهب للمصدر الأصلي وتعلم هناك."
+
+وبعدين ترجع CyberJocx وتثبت إنك تعلمت.
+
+---
+
+# 10. Course Verification
+
+مش كل كورس لازم يكون عنده Certificate.
+
+عندك:
+
+### 🟢 Certificate Verification
+
+لو المصدر عنده شهادة.
+
+### 🟡 CyberJocx Assessment
+
+لو مفيش شهادة.
+
+### 🔵 Completion Declaration
+
+للمحتوى البسيط.
+
+لكن المستويات المهمة **ما تعتمدش على زر "Completed" فقط**.
+
+---
+
+# 11. Certificate Upload
+
+المستخدم يقدر يرفع شهادة.
+
+لكن مهم جدًا:
+
+**رفع الصورة وحده لا يعني إن الشهادة موثقة.**
+
+اعمل:
+
+```text
+Uploaded
+    ↓
+Pending Verification
+    ↓
+Verified / Rejected
+```
+
+وفي المستقبل ممكن تضيف verification automation.
+
+---
+
+# 12. Labs — أهم إضافة في المشروع
+
+دي بالنسبة لي **أولوية رقم 1**.
+
+CyberJocx لازم يكون عنده:
+
+# CYBERJOCX LABS
+
+المستخدم يتعلم:
+
+```text
+Course
+ ↓
+Lab
+ ↓
+Assessment
+ ↓
+Unlock
+```
+
+مش:
+
+```text
+Video
+ ↓
+Next Video
+```
+
+---
+
+# 13. أنواع الـLabs
+
+ابدأ تدريجيًا:
+
+### Web
+
+* XSS
+* SQL Injection
+* Authentication
+* Authorization
+* SSRF
+* File Upload
+
+### Network
+
+* Recon
+* Enumeration
+* Network Analysis
+
+### Linux
+
+* Enumeration
+* Permissions
+* Privilege Escalation
+
+### Blue Team
+
+* Log Analysis
+* Detection
+* Incident Response
+
+### API
+
+* API Authentication
+* BOLA
+* JWT
+* Rate Limiting
+
+### Malware
+
+* Static Analysis
+* Behavioral Analysis
+
+---
+
+# 14. Lab Architecture
+
+مهم جدًا.
+
+الـLab ماينفعش يكون على نفس بيئة CyberJocx الأساسية.
+
+لازم:
+
+```text
+User
+ ↓
+Lab Gateway
+ ↓
+Isolated Environment
+ ↓
+Target
+```
+
+وكل Session تكون:
+
+* Isolated
+* Resettable
+* Time-limited
+* Monitored
+* Resource-limited
+
+---
+
+# 15. Lab Validation
+
+كل Lab لازم يعرف:
+
+```text
+Start
+ ↓
+Progress
+ ↓
+Flag / Evidence
+ ↓
+Validation
+ ↓
+Success
+ ↓
+XP
+ ↓
+Unlock
+```
+
+والـvalidation يكون Server-side.
+
+---
+
+# 16. نظام الـWrite-ups
+
+أضف:
+
+# CyberJocx Write-ups
+
+المستخدم يقدر يكتب:
+
+* Lab Write-up
+* CVE Analysis
+* Malware Analysis
+* CTF Write-up
+* Research
+
+ويظهر في الـProfile.
+
+وده يقودنا لحاجة أهم.
+
+---
+
+# 17. Cyber Portfolio
+
+كل مستخدم يكون عنده:
+
+```text
+CYBER PROFILE
+
+Role:
+Aspiring Red Teamer
+
+Skills:
+Networking 82%
+Linux 74%
+Python 68%
+Web Security 51%
+
+Labs:
+37
+
+Write-ups:
+8
+
+Projects:
+4
+
+Certificates:
+5
+
+Achievements:
+12
+```
+
+والـProfile ممكن يكون Public.
+
+---
+
+# 18. Skill Engine
+
+دي من أهم الحاجات.
+
+بدل:
+
+> Track Progress = 70%
+
+اعمل:
+
+# Skill Matrix
+
+مثلاً:
+
+```text
+Networking       ████████░░ 82%
+Linux            ███████░░░ 74%
+Python           ██████░░░░ 65%
+Web Security     █████░░░░░ 48%
+API Security     ███░░░░░░░ 31%
+Cloud             ██░░░░░░░░ 20%
+```
+
+---
+
+# 19. الـSkills تكون مشتركة بين التراكات
+
+دي نقطة قوية جدًا.
+
+لو المستخدم درس Linux في Red Team:
+
+يدخل DevOps:
+
+> Linux already completed ✓
+
+مش نعيد الكورس.
+
+---
+
+# 20. Dynamic Roadmaps
+
+لما المستخدم يدخل Track جديد:
+
+CyberJocx يحلل Skills بتاعته.
+
+ويقول:
+
+> You already completed 38% of this journey.
+
+مثلاً:
+
+```text
+DevOps
+
+✓ Linux
+✓ Networking
+✓ Git
+
+🔒 Docker
+🔒 CI/CD
+🔒 Kubernetes
+```
+
+---
+
+# 21. إضافة التراكات الجديدة
+
+أنا موافق جدًا على:
+
+### 🔴 Red Team
+
+### 🔵 Blue Team
+
+### 🛡️ SOC Analyst
+
+### 🟣 Threat Intelligence
+
+### 🦠 Malware Analysis
+
+### 🌐 Web Security
+
+### 🔐 API Security
+
+### ☁️ Cloud Security
+
+### 🚀 DevOps
+
+### ⚙️ DevSecOps
+
+### 🤖 AI & ML
+
+### 🧠 AI Security
+
+### 🧪 Software Testing
+
+### 🤖 QA Automation
+
+### 🔬 Digital Forensics
+
+### 📱 Mobile Security
+
+لكن **ما تطلقهمش كلهم مرة واحدة**.
+
+---
+
+# 22. AI Track
+
+خليه:
+
+# AI & Machine Learning
+
+```text
+Python
+ ↓
+Math Basics
+ ↓
+ML Fundamentals
+ ↓
+Deep Learning
+ ↓
+LLMs
+ ↓
+RAG
+ ↓
+AI Engineering
+```
+
+وبعدين Branch:
+
+```text
+AI Security
+```
+
+---
+
+# 23. AI Security Track
+
+وده مهم جدًا لـNEXUS.
+
+```text
+LLM Security
+ ↓
+Prompt Injection
+ ↓
+RAG Security
+ ↓
+Agent Security
+ ↓
+Model Security
+ ↓
+AI Red Teaming
+ ↓
+AI Defense
+```
+
+---
+
+# 24. DevOps Track
+
+```text
+Linux
+ ↓
+Git
+ ↓
+Docker
+ ↓
+CI/CD
+ ↓
+Cloud
+ ↓
+Kubernetes
+ ↓
+IaC
+ ↓
+DevOps
+```
+
+وبعدين:
+
+```text
+DevOps
+ ↓
+DevSecOps
+```
+
+---
+
+# 25. API Security Track
+
+أنا شايف ده Track أساسي.
+
+```text
+HTTP
+ ↓
+REST APIs
+ ↓
+Authentication
+ ↓
+Authorization
+ ↓
+JWT
+ ↓
+OAuth
+ ↓
+API Security
+ ↓
+OWASP API Security
+ ↓
+API Pentesting
+ ↓
+Labs
+```
+
+---
+
+# 26. QA / QC
+
+ما تعملش الاتنين كأنهم Track منفصلين من البداية.
+
+اعمل:
+
+# Software Testing
+
+ثم:
+
+```text
+Software Testing
+       │
+       ├── Manual Testing
+       ├── QA
+       ├── QC
+       ├── Automation
+       └── Security Testing
+```
+
+وبالتالي المستخدم يفهم العلاقة بينهم.
+
+---
+
+# 27. NEXUS يدخل في الـRoadmap
+
+دي مهمة جدًا.
+
+المستخدم يقف على Node:
+
+> مش فاهم الخطوة دي.
+
+يضغط:
+
+### Ask NEXUS
+
+NEXUS يعرف:
+
+* المستخدم فين
+* خلص إيه
+* فشل في إيه
+* Skill gaps
+* الـTrack الحالي
+* الـNode الحالي
+
+ويشرح له.
+
+---
+
+# 28. NEXUS بعد Lab
+
+لو المستخدم فشل:
+
+بدل:
+
+> Wrong answer.
+
+يقول:
+
+> عندك مشكلة في Enumeration. راجع الجزء X ثم حاول مرة أخرى.
+
+**لكن بدون إعطائه الحل مباشرة.**
+
+وده يخلي NEXUS Mentor حقيقي.
+
+---
+
+# 29. NEXUS مستقل Architecture
+
+دي لازم نعملها من دلوقتي.
+
+حاليًا الكود عندك يستخدم:
+
+`invokeLLM()`
+
+والـNEXUS في `routers.ts` بيستخدمه.
+
+وده ممتاز كبداية.
+
+لكن مستقبلاً نخلي:
+
+```text
+NEXUS
+  ↓
+NEXUS AI Engine
+  ↓
+Model Adapter
+  ↓
+Provider
+```
+
+بحيث:
+
+```text
+OpenAI
+Gemini
+Local Model
+NEXUS Model
+```
+
+كلهم مجرد Providers.
+
+وبعدين:
+
+```text
+NEXUS
+ ↓
+NEXUS Model
+```
+
+---
+
+# 30. NEXUS Knowledge Engine
+
+NEXUS يبقى عنده Knowledge Layer:
+
+```text
+Courses
+Labs
+CVE
+Malware
+MITRE
+Tools
+Roadmaps
+Skills
+User Progress
+```
+
+ويستخدم RAG بدل ما نعتمد فقط على معرفة الـLLM.
+
+---
+
+# 31. NEXUS Memory
+
+ذاكرة المستخدم:
+
+```text
+Goal
+Track
+Level
+Skills
+Weaknesses
+Completed Labs
+Failed Assessments
+Learning Preferences
+```
+
+لكن لازم يكون عندنا Privacy Controls واضحة.
+
+---
+
+# 32. NEXUS Tools
+
+في المستقبل NEXUS مايبقاش مجرد Chat.
+
+يبقى قادر يستخدم أدوات CyberJocx نفسها.
+
+مثلاً:
+
+```text
+NEXUS
+ ↓
+CVE Search
+ ↓
+MITRE Lookup
+ ↓
+Course Search
+ ↓
+Lab Recommendation
+ ↓
+Skill Analysis
+```
+
+---
+
+# 33. Job Readiness
+
+دي إضافة ضخمة.
+
+مثلاً:
+
+# SOC Analyst Readiness
+
+```text
+Networking       ✓
+Linux            ✓
+SIEM             ⚠
+Log Analysis     ✗
+Incident Response ✗
+```
+
+ثم:
+
+> Readiness: 62%
+
+و:
+
+> Complete these 3 Labs to reach 80%.
+
+---
+
+# 34. Gamification
+
+اعمل:
+
+### XP
+
+### Levels
+
+### Badges
+
+### Achievements
+
+### Streaks
+
+### Leaderboards
+
+لكن كل XP لازم يكون مرتبط بإنجاز حقيقي.
+
+---
+
+# 35. Point Transactions
+
+ما تعتمدش فقط على:
+
+`user.points`
+
+اعمل:
+
+```text
+point_transactions
+
++100 Completed Lab
++50 Passed Assessment
++20 Daily Streak
++200 Completed Project
+```
+
+عشان نعرف كل نقطة جت منين.
+
+---
+
+# 36. Leaderboard
+
+اعمل:
+
+### Global
+
+### Weekly
+
+### Monthly
+
+### Track
+
+### Friends
+
+مثلاً:
+
+```text
+RED TEAM
+
+01 Ahmed
+02 Mohamed
+03 Ali
+```
+
+---
+
+# 37. Certificates
+
+كل شهادة يكون لها:
+
+```text
+Certificate ID
+Certificate Code
+User
+Track
+Level
+Score
+Issue Date
+Verification Status
+```
+
+وممكن تعمل:
+
+# Verify Certificate
+
+مثلاً:
+
+```text
+CyberJocx Certificate
+
+VALID ✓
+
+Red Team — Junior
+Score: 87%
+Issued: ...
+ID: CJX-XXXXX
+```
+
+---
+
+# 38. CVE Center
+
+بدل ما يبقى Database فقط.
+
+خليه:
+
+# CVE Intelligence
+
+كل CVE يكون مرتبط بـ:
+
+```text
+CVE
+ ↓
+Technology
+ ↓
+Attack Type
+ ↓
+MITRE
+ ↓
+Tools
+ ↓
+Labs
+ ↓
+Courses
+ ↓
+NEXUS
+```
+
+---
+
+# 39. Malware Center
+
+نفس الفكرة.
+
+```text
+Malware
+ ↓
+Behavior
+ ↓
+MITRE
+ ↓
+IOCs
+ ↓
+Related CVEs
+ ↓
+Detection
+ ↓
+Labs
+ ↓
+Learning
+```
+
+---
+
+# 40. Knowledge Graph
+
+دي Feature مستقبلية ضخمة.
+
+```text
+CVE
+ │
+ ├── Technology
+ ├── Technique
+ ├── Tool
+ ├── Malware
+ ├── Course
+ └── Lab
+```
+
+والمستخدم يقدر ينتقل بينهم.
+
+---
+
+# 41. Community
+
+خلي الـCommunity Cybersecurity-specific.
+
+أنواع المنشورات:
+
+### Question
+
+### Write-up
+
+### Research
+
+### CVE
+
+### Achievement
+
+### Discussion
+
+---
+
+# 42. الـProfile
+
+الـProfile مش مجرد Social Profile.
+
+يبقى:
+
+# Cybersecurity Identity
+
+فيه:
+
+* Skills
+* Labs
+* Certifications
+* Projects
+* Write-ups
+* Achievements
+* Career Goal
+* Readiness
+
+---
+
+# 43. Admin Panel
+
+حوّله إلى:
+
+# CyberJocx Control Center
+
+ويشمل:
+
+### Users
+
+### Tracks
+
+### Courses
+
+### Labs
+
+### CVEs
+
+### Malware
+
+### Tools
+
+### Community
+
+### Certificates
+
+### Reports
+
+### NEXUS
+
+### AI Usage
+
+### Audit Logs
+
+### Moderation
+
+### System Health
+
+---
+
+# 44. Audit Logs
+
+أي Admin Action تتسجل:
+
+```text
+Admin
+Action
+Target
+Timestamp
+IP / metadata حسب الحاجة والخصوصية
+Result
+```
+
+مثلاً:
+
+> Admin published course.
+
+> Admin modified track.
+
+> Admin deleted content.
+
+---
+
+# 45. Security Hardening
+
+وده مهم جدًا لأنك بتبيع Cybersecurity.
+
+لازم المشروع نفسه يبقى Secure:
+
+* Authentication hardening
+* Authorization
+* Rate limiting
+* Input validation
+* Output encoding
+* CSRF protection حيث يلزم
+* Secure cookies
+* Session protection
+* File upload validation
+* SSRF protection
+* CSP
+* Security headers
+* Secrets management
+* Dependency scanning
+* SAST
+* DAST
+
+---
+
+# 46. AI Security
+
+NEXUS نفسه لازم يتحط تحت Security Testing.
+
+اختبر:
+
+* Prompt Injection
+* Data Leakage
+* Tool Abuse
+* Context Manipulation
+* Jailbreak attempts
+* Sensitive data exposure
+* Excessive agency
+
+خصوصًا لما NEXUS في المستقبل يبدأ يستخدم Tools.
+
+---
+
+# 47. Database
+
+هنا عندك شغل مهم.
+
+بدل بعض الـJSON fields، اعمل tables normalized للبيانات اللي هتحتاج Analytics عليها.
+
+مثلاً بدل:
+
+`completedLevelsJson`
+
+نعمل:
+
+```text
+user_level_progress
+```
+
+فيه:
+
+```text
+userId
+levelId
+status
+progress
+score
+completedAt
+```
+
+---
+
+# 48. Foreign Keys
+
+العلاقات المهمة لازم تكون محمية بـForeign Keys.
+
+مثلاً:
+
+```text
+user → progress
+course → progress
+track → levels
+level → modules
+module → resources
+```
+
+مع Cascade rules مدروسة.
+
+---
+
+# 49. Indexes
+
+اعمل Indexes على الأشياء اللي هتبحث فيها كثيرًا:
+
+* userId
+* trackId
+* courseId
+* levelId
+* cveNumber
+* slug
+* createdAt
+* status
+
+---
+
+# 50. Tests
+
+زود:
+
+### Unit
+
+### Integration
+
+### E2E
+
+### API
+
+### Authorization
+
+### Security
+
+خصوصًا:
+
+> User cannot access Admin.
+
+> User cannot modify another user's progress.
+
+> User cannot award himself XP.
+
+> User cannot issue himself a certificate.
+
+> User cannot access another user's private data.
+
+---
+
+# 51. Content Quality System
+
+أي Course أو Lab أو Resource يدخل المنصة يكون له:
+
+```text
+Draft
+ ↓
+Review
+ ↓
+Approved
+ ↓
+Published
+ ↓
+Archived
+```
+
+مش Admin يحط حاجة Live وخلاص.
+
+---
+
+# 52. Track Builder للـAdmin
+
+دي مهمة جدًا.
+
+بدل ما المطور يكتب الـRoadmap يدويًا كل مرة.
+
+Admin يعمل:
+
+```text
+Create Track
+
+ ↓
+
+Create Level
+
+ ↓
+
+Add Nodes
+
+ ↓
+
+Connect Nodes
+
+ ↓
+
+Set Requirements
+
+ ↓
+
+Set XP
+
+ ↓
+
+Set Assessment
+
+ ↓
+
+Publish
+```
+
+وده هيخلي المنصة قابلة للتوسع.
+
+---
+
+# 53. Roadmap Graph Database Model
+
+ممكن تكون العلاقات:
+
+```text
+track
+ ↓
+level
+ ↓
+node
+ ↓
+prerequisites
+ ↓
+resources
+```
+
+والـNode ممكن تكون:
+
+```text
+COURSE
+LAB
+ASSESSMENT
+PROJECT
+WRITEUP
+SKILL
+```
+
+---
+
+# 54. أهم تغيير في الـUX
+
+ما تعرضش كل البيانات مرة واحدة.
+
+الخريطة:
+
+**Clean**
+
+والتفاصيل:
+
+**Side Panel / Drawer**
+
+يعني:
+
+```text
+        ROADMAP
+━━━━━━━━━━━━━━━━━━━━
+
+       ●
+      / \
+     ●   ●
+      \ /
+       ●
+
+      [Node]
+         ↓
+┌────────────────────┐
+│ HTTP FUNDAMENTALS  │
+│                    │
+│ Learn              │
+│ Practice           │
+│ Assessment         │
+│                    │
+│ [Continue]         │
+└────────────────────┘
+```
+
+---
+
+# 55. الـRoadmap لازم تكون Responsive
+
+Desktop:
+
+خريطة كبيرة.
+
+Tablet:
+
+خريطة قابلة للـPan/Zoom.
+
+Mobile:
+
+Vertical Journey.
+
+يعني:
+
+**نفس البيانات، UI مختلف حسب الجهاز.**
+
+---
+
+# 56. Search داخل الـRoadmap
+
+المستخدم يكتب:
+
+> SQL Injection
+
+الخريطة تروح مباشرة للـNode.
+
+وتقول:
+
+> موجود في Level 3.
+
+---
+
+# 57. Progress داخل الخريطة
+
+Node:
+
+### Locked
+
+🔒
+
+### Available
+
+○
+
+### In Progress
+
+◐
+
+### Completed
+
+✓
+
+### Mastered
+
+★
+
+دي هتدي شكل Game-like جدًا.
+
+---
+
+# 58. الـCapstone
+
+كل Track لازم ينتهي بـ:
+
+# Capstone Project
+
+مثلاً:
+
+### Red Team
+
+> Full Web Pentest Simulation
+
+### SOC
+
+> Investigate Incident
+
+### DevOps
+
+> Build Secure CI/CD Pipeline
+
+### AI
+
+> Build RAG Application
+
+### API Security
+
+> Audit Vulnerable API
+
+وبعدها:
+
+**Certification.**
+
+---
+
+# 59. Track Completion
+
+ما تقولش:
+
+> 100% لأنك خلصت الفيديوهات.
+
+قول:
+
+> **Track Mastered**
+
+لما المستخدم يحقق:
+
+```text
+Courses ✓
+Labs ✓
+Assessments ✓
+Capstone ✓
+```
+
+---
+
+# 60. أهم فلسفة في CyberJocx
+
+أنا عايزنا نثبت الجملة دي كـProduct Philosophy:
+
+# Learn → Practice → Prove → Master → Showcase → Advance
+
+مش:
+
+# Watch → Complete → Next
+
+وده فرق ضخم.
+
+---
+
+# 🧭 الـRoadmap النهائية
+
+المستخدم يدخل:
+
+## "What do you want to become?"
+
+يختار:
+
+🔴 Red Team
+🔵 Blue Team
+🛡️ SOC
+🟣 Threat Intelligence
+🤖 AI
+🧠 AI Security
+🚀 DevOps
+⚙️ DevSecOps
+🧪 QA
+🔐 API Security
+☁️ Cloud
+...إلخ.
+
+ثم:
+
+```text
+GOAL
+ ↓
+SKILL ASSESSMENT
+ ↓
+PERSONALIZED ROADMAP
+ ↓
+LEARN
+ ↓
+PRACTICE
+ ↓
+ASSESS
+ ↓
+UNLOCK
+ ↓
+XP
+ ↓
+SKILL PROFILE
+ ↓
+CAPSTONE
+ ↓
+CERTIFICATE
+ ↓
+PORTFOLIO
+ ↓
+JOB READINESS
+```
+
+و**NEXUS موجود في كل خطوة.**
+
+---
+
+# 🧠 وأخيرًا: NEXUS نفسه
+
+أنا شايف إن NEXUS يبقى في المستقبل:
+
+# **The Intelligence Layer of CyberJocx**
+
+مش مجرد Chatbot.
+
+```text
+                         CYBERJOCX
+                              │
+          ┌───────────────────┼───────────────────┐
+          ↓                   ↓                   ↓
+       LEARNING          INTELLIGENCE          PRACTICE
+          │                   │                   │
+       Courses               CVE                 Labs
+       Tracks              Malware               CTF
+       Skills              MITRE                Projects
+          │                   │                   │
+          └───────────────────┼───────────────────┘
+                              ↓
+                           NEXUS
+                              │
+             ┌────────────────┼────────────────┐
+             ↓                ↓                ↓
+         Mentor           Analyst           Career
+             ↓                ↓                ↓
+       Personalized       Research         Readiness
+        Learning
+```
+
+وبعدها على المدى البعيد:
+
+```text
+CYBERJOCX
+    ↓
+NEXUS ENGINE
+    ↓
+NEXUS KNOWLEDGE
+    ↓
+NEXUS MODEL
+```
+
+**وهنا فعلًا NEXUS يبقى منتج AI خاص بـCyberJocx، مش مجرد Wrapper لـOpenAI أو Gemini.**
+
+---
+
+# 🔥 ترتيب التنفيذ اللي أنا أنصحك بيه
+
+مش ننفذ الـ60 نقطة مرة واحدة.
+
+### PHASE 1 — أهم حاجة
+
+**Roadmap Engine الجديد**
+
+* Interactive Map
+* Nodes
+* Levels
+* Prerequisites
+* Unlock System
+* External Resources
+* Labs
+* Assessments
+
+### PHASE 2
+
+**Skill Engine**
+
+* Skill Matrix
+* Shared Skills
+* Dynamic Roadmaps
+* Personalized Progress
+
+### PHASE 3
+
+**CyberJocx Labs**
+
+* Lab Engine
+* Isolation
+* Validation
+* Reset
+* Progress
+
+### PHASE 4
+
+**NEXUS 2.0**
+
+* User Context
+* Roadmap Context
+* Skill Context
+* RAG
+* Memory
+* Tools
+* Provider abstraction
+
+### PHASE 5
+
+**Career**
+
+* Portfolio
+* Job Readiness
+* Capstone
+* Verified Certificates
+
+### PHASE 6
+
+**Intelligence**
+
+* CVE ↔ Malware ↔ MITRE ↔ Tools ↔ Labs ↔ Courses
+* Knowledge Graph
+
+### PHASE 7
+
+**NEXUS Independence**
+
+* Open-source model
+* Fine-tuning
+* Cybersecurity datasets
+* Evaluation
+* Dedicated inference
+* ثم لاحقًا **NEXUS Model الخاص**
+
+---
+
+## وآخر نقطة مهمة جدًا
+
+**ما تضيفش كل الـTracks مرة واحدة.**
+
+أنا شخصيًا أبدأ بالـ7 دول:
+
+> 🔴 Red Team
+> 🔵 Blue Team
+> 🛡️ SOC Analyst
+> 🌐 Web Security
+> 🔐 API Security
+> 🚀 DevOps
+> 🤖 AI
+
+وبعد ما الـRoadmap Engine والـLabs والـSkill Engine يثبتوا، نضيف:
+
+> Cloud → DevSecOps → Malware → Threat Intelligence → QA/QC → Forensics → Mobile → AI Security
+
+كده أنت مش بتعمل **منصة فيها 20 قسم**؛ أنت بتبني **نظام واحد ذكي يقدر يستوعب أي Career Path**.
+
+وده في رأيي هو الاتجاه اللي يخلي CyberJocx مختلف فعلًا، خصوصًا إن الكود الحالي عندك بالفعل عنده نقطة انطلاق كويسة للـRoadmap وNEXUS؛ المطلوب دلوقتي هو **إعادة تصميم الـArchitecture حوالين الـJourney والـSkills والـPractice** بدل ما نفضل نزود Features منفصلة.

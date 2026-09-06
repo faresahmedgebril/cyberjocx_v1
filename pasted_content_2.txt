@@ -1,0 +1,2353 @@
+تمام يا فارس. هجمع لك **كل الـRequirements من أول Security Hardening لحد الـSecurity Operations Role والـMonitoring والـInfrastructure Independence** في وثيقة واحدة متكاملة، بحيث تقدر تدّيها لـManus أو لأي AI Developer Agent وتكون هي المرجع الأساسي للتنفيذ.
+
+# CyberJocx — Complete Security Hardening, Security Operations & Infrastructure Independence Requirements
+
+## Version 2.0 — Security First / Manus-Compatible / AI Provider Independent
+
+### الهدف الرئيسي
+
+تأمين CyberJocx بالكامل ضد الثغرات الأمنية، مشاكل الـBusiness Logic، تسريب البيانات، إساءة استخدام الـAPI، إساءة استخدام الـAI، ومحاولات الاختراق، مع الحفاظ على جميع الـFeatures الحالية وعدم إعادة بناء المشروع من الصفر.
+
+يجب أن يصبح CyberJocx:
+
+* Secure by Design
+* Least Privilege
+* Defense in Depth
+* AI Provider Independent
+* Storage Provider Independent
+* Scheduler Independent
+* Manus-Compatible حاليًا
+* Infrastructure Independent مستقبلًا
+* Observable
+* Auditable
+* Recoverable
+
+**ممنوع الادعاء أن النظام Secure بنسبة 100%.**
+
+الصياغة النهائية يجب أن تكون:
+
+> **Security Hardening has been implemented and known attack surfaces and regression cases have been tested.**
+
+---
+
+# 1. القاعدة الأساسية — ممنوع إعادة بناء المشروع
+
+لا تعيد كتابة CyberJocx من الصفر.
+
+اعمل على الكود الحالي الموجود بالفعل.
+
+قبل أي تعديل يجب فحص:
+
+1. Architecture
+2. Routes
+3. tRPC Procedures
+4. Database Schema
+5. Migrations
+6. Authentication
+7. Authorization
+8. Storage
+9. AI Integration
+10. Scheduled Jobs
+11. Permissions
+12. Upload Endpoints
+13. Public Endpoints
+14. Admin Endpoints
+15. Frontend localStorage/session handling
+16. Environment variables
+17. Manus dependencies
+
+كل تعديل يجب أن يكون:
+
+**Minimal + Secure + Maintainable + Backward Compatible**
+
+لا تحذف أي Feature موجودة إلا إذا ثبت أنها:
+
+* غير مستخدمة
+* غير مطلوبة
+* أو خطيرة أمنيًا ولا يوجد بديل آمن لها
+
+---
+
+# 2. Security Architecture Principle
+
+يجب تطبيق:
+
+### Defense in Depth
+
+الأمان لا يعتمد على Layer واحدة.
+
+Architecture:
+
+```text
+Internet
+   ↓
+Cloudflare / WAF
+   ↓
+Reverse Proxy / Nginx
+   ↓
+CyberJocx Backend
+   ↓
+Security Middleware
+   ↓
+Authentication
+   ↓
+Authorization
+   ↓
+Input Validation
+   ↓
+Business Logic
+   ↓
+Database / Storage / AI
+```
+
+كل Layer يجب أن يكون لها Security Controls مستقلة.
+
+---
+
+# 3. Authentication Security
+
+راجع Authentication بالكامل.
+
+يجب التأكد من:
+
+* Google OAuth State Validation
+* OAuth Callback Validation
+* Verified Google Email
+* Session Creation
+* JWT Signing
+* JWT Verification
+* Cookie Security
+* Secure Flag
+* HttpOnly
+* SameSite
+* Session Expiration
+* Logout
+* Session Revocation
+* Token Theft Mitigation
+* Account Takeover Prevention
+
+لا تعتمد على وجود JWT وحده كدليل على الأمان.
+
+يفضل:
+
+```text
+Secure
+HttpOnly
+SameSite
+Cookie
+```
+
+بدل تخزين authentication tokens في:
+
+```text
+localStorage
+```
+
+إلا إذا كان هناك سبب معماري قوي وموثق.
+
+Session lifetime يجب أن يكون معقولًا.
+
+يجب توفير mechanism واضح لـ:
+
+* Logout
+* Revocation
+* Session invalidation
+
+---
+
+# 4. Authorization / RBAC
+
+راجع **كل Endpoint** وليس Admin فقط.
+
+لكل عملية:
+
+> هل المستخدم الحالي مسموح له بتنفيذ هذه العملية على هذا الـresource تحديدًا؟
+
+اختبر:
+
+* IDOR
+* BOLA
+* Horizontal Privilege Escalation
+* Vertical Privilege Escalation
+* Mass Assignment
+* Role Manipulation
+* Resource Ownership Bypass
+
+خصوصًا:
+
+* profile.update
+* profile.byId
+* courses
+* community
+* friends
+* notifications
+* market
+* AI
+* admin procedures
+
+---
+
+# 5. Protected User Fields
+
+المستخدم العادي لا يستطيع تعديل:
+
+```text
+role
+memberRank
+points
+isVip
+admin-controlled fields
+moderation fields
+security fields
+verification status
+account status
+security flags
+```
+
+أي تعديل لهذه البيانات يجب أن يتم server-side من خلال authorization واضح.
+
+لا تعتمد على:
+
+```text
+Frontend hides field
+```
+
+كوسيلة حماية.
+
+---
+
+# 6. Public Profile Privacy
+
+ممنوع إرجاع Database User Object بالكامل.
+
+لا تستخدم:
+
+```text
+user object
+→ remove sensitive fields
+→ return
+```
+
+استخدم:
+
+```text
+ExplicitPublicUserDTO
+```
+
+Public Profile يحتوي فقط على البيانات المطلوبة.
+
+لا يتم تسريب:
+
+* Email
+* Phone
+* Login IP
+* Login Country
+* Login City
+* Latitude
+* Longitude
+* Session Information
+* Security Metadata
+* Admin Fields
+* Moderation Fields
+* Internal Metadata
+* Internal IDs غير المطلوبة
+
+---
+
+# 7. Frontend Storage Privacy
+
+راجع:
+
+* localStorage
+* sessionStorage
+* IndexedDB
+* cookies
+
+ممنوع تخزين:
+
+* Full database user object
+* JWTs غير الضرورية
+* API Keys
+* Provider Secrets
+* Sensitive security information
+
+خزن فقط البيانات الضرورية للواجهة.
+
+---
+
+# 8. Database Security
+
+جميع Queries يجب مراجعتها.
+
+يجب:
+
+* Parameterized Queries
+* Drizzle ORM حيث مستخدم
+* منع SQL Injection
+* Query Limits
+* Pagination
+* Proper Indexing
+* Database Constraints
+* Foreign Keys حيث مناسبة
+* Unique Constraints
+
+راجع خصوصًا:
+
+* Likes
+* Follows
+* Friend Requests
+* Progress
+* Cart
+* Notifications
+* Posts
+* Comments
+
+---
+
+# 9. Database Integrity
+
+أضف Unique Constraints حيث يلزم.
+
+مثلاً:
+
+```text
+(user_id, post_id)
+```
+
+للـLikes.
+
+و:
+
+```text
+(follower_id, following_id)
+```
+
+للـFollows.
+
+الهدف منع duplicate records بسبب:
+
+* Concurrent Requests
+* Double Click
+* Race Conditions
+* API Abuse
+
+استخدم Transactions في العمليات الحساسة التي تعدل:
+
+* Counters
+* Balances
+* Points
+* State
+* Progress
+* Inventory
+
+---
+
+# 10. Course Progress Integrity
+
+الـFrontend لا يحدد الحقيقة.
+
+Server-side يجب التحقق من:
+
+* Course existence
+* Published status
+* User eligibility
+* Progress range
+* Completion status
+* Duplicate submissions
+
+يجب منع:
+
+```text
+progress < 0
+progress > 100
+```
+
+ولا يتم اعتبار Course Completed اعتمادًا على قيمة يرسلها العميل فقط.
+
+---
+
+# 11. Quiz Security
+
+راجع `submitQuiz`.
+
+يجب:
+
+* Maximum answers
+* Validate Quiz ID
+* Validate Question IDs
+* Validate answer count
+* Validate answer structure
+* Prevent oversized JSON
+* Prevent repeated abuse
+* Server-side scoring
+* No trust in frontend score
+* Store minimum required information
+
+---
+
+# 12. File Upload Security
+
+كل Upload Endpoint يجب أن يكون:
+
+**Secure by Default**
+
+لا تعتمد على MIME Type المرسل من المستخدم فقط.
+
+تحقق من:
+
+* File Size
+* Actual MIME
+* Magic Bytes
+* Extension
+* Image Dimensions
+* Filename
+* Storage Key
+* Malformed Files
+* Decompression Bombs حيث ينطبق
+* Duplicate Abuse
+* Upload Quotas
+
+يجب توليد filenames عشوائية.
+
+ممنوع استخدام user-provided filename مباشرة كـstorage path.
+
+Limits منفصلة:
+
+```text
+Images
+Videos
+Documents
+Audio
+```
+
+---
+
+# 13. Storage Abstraction
+
+لا تجعل CyberJocx مرتبطًا مباشرة بـManus Storage.
+
+أنشئ abstraction:
+
+```text
+StorageProvider
+```
+
+يدعم مستقبلًا:
+
+```text
+Manus / Forge
+S3
+Cloudflare R2
+MinIO
+```
+
+Business logic لا يعرف provider المستخدم.
+
+Configuration عبر:
+
+```text
+Environment Variables
+```
+
+ولا توجد Provider URLs hardcoded داخل business logic.
+
+---
+
+# 14. AI Architecture
+
+NEXUS AI يجب ألا يكون مربوطًا بمزود واحد.
+
+استخدم:
+
+```text
+AIProvider
+AIAdapter
+```
+
+Architecture:
+
+```text
+CyberJocx
+    ↓
+NEXUS AI
+    ↓
+AI Adapter
+    ↓
+Provider
+```
+
+Providers:
+
+* Ollama
+* Gemini
+* OpenRouter
+* Grok
+* OpenAI
+* OpenAI-compatible APIs
+* Local Models
+
+Configuration:
+
+```text
+AI_PROVIDER
+AI_BASE_URL
+AI_API_KEY
+AI_MODEL
+```
+
+API Keys ممنوع ظهورها في frontend.
+
+الصحيح:
+
+```text
+React
+ ↓
+CyberJocx Backend
+ ↓
+AI Adapter
+ ↓
+AI Provider
+```
+
+ممنوع:
+
+```text
+React → AI Provider
+```
+
+---
+
+# 15. Local AI Support
+
+يجب تصميم AI Adapter لدعم:
+
+```text
+CyberJocx Backend
+        ↓
+HTTPS
+        ↓
+Private / Authenticated AI Gateway
+        ↓
+Ollama
+        ↓
+Local Model
+```
+
+ممنوع:
+
+```text
+Internet → Port 11434
+```
+
+لا expose Ollama مباشرة للإنترنت.
+
+يجب استخدام:
+
+* HTTPS
+* Authentication
+* Firewall
+* Private Networking أو Secure Tunnel
+* Rate Limiting
+* Request Limits
+* Timeout
+
+---
+
+# 16. AI Abuse & Cost Protection
+
+كل AI Endpoint يجب أن يحتوي على:
+
+* Authentication
+* Rate Limit
+* Per-user Quota
+* IP Rate Limit
+* Prompt Size Limit
+* Output Token Limit
+* Timeout
+* Concurrency Limit
+* Abuse Detection
+
+الهدف منع:
+
+> Unlimited AI Proxy Abuse
+
+سواء provider:
+
+* Local
+* Free
+* Gemini
+* Grok
+* OpenRouter
+* OpenAI
+
+---
+
+# 17. AI Failure Handling
+
+إذا Local AI offline:
+
+```text
+AI unavailable
+      ↓
+Graceful Error
+      ↓
+Optional Fallback Provider
+```
+
+CyberJocx لا ينهار بالكامل.
+
+AI يجب أن يكون:
+
+**Optional Provider**
+
+وليس Single Point of Failure.
+
+---
+
+# 18. API Security Inventory
+
+يجب إنشاء جدول كامل:
+
+| Endpoint | Access | Auth | Authorization | Rate Limit | Input Limit | Sensitive Data |
+| -------- | ------ | ---- | ------------- | ---------- | ----------- | -------------- |
+
+يجب فحص كل Endpoint ضد:
+
+* Unauthenticated access
+* Low privilege access
+* Unauthorized resource access
+* Malformed input
+* Oversized input
+* Repeated requests
+* Enumeration
+* Error leakage
+
+---
+
+# 19. Rate Limiting
+
+Rate limits مختلفة حسب العملية.
+
+يجب حماية:
+
+* Login
+* OAuth
+* AI
+* Profile Update
+* Upload
+* Posts
+* Comments
+* Likes
+* Follows
+* Friend Requests
+* Search
+* CVE Export
+* Expensive Database Operations
+
+لا تستخدم:
+
+```text
+One global limit
+```
+
+لكل النظام.
+
+---
+
+# 20. Request Size Limits
+
+Default body limit صغير.
+
+لا تستخدم:
+
+```text
+50MB global request limit
+```
+
+بدون سبب.
+
+Upload endpoints فقط تحصل على limits أكبر ومحددة حسب النوع.
+
+الهدف:
+
+* Memory Exhaustion
+* Request Flooding
+* DoS
+
+---
+
+# 21. Security Headers
+
+أضف:
+
+* Content-Security-Policy
+* X-Content-Type-Options
+* Referrer-Policy
+* Permissions-Policy
+* Strict-Transport-Security
+* Frame Protection
+
+يمكن استخدام Helmet أو equivalent.
+
+CSP يتم اختبارها أولًا مع React/Vite قبل enforcement النهائي.
+
+---
+
+# 22. CSRF Protection
+
+راجع كل State-Changing Operation:
+
+* POST
+* PUT
+* PATCH
+* DELETE
+
+إذا Authentication تعتمد على Cookies، يجب وجود:
+
+* CSRF protection
+
+أو:
+
+* Robust Origin validation
+* Referer validation
+* Appropriate SameSite policy
+
+لا تعتمد على SameSite وحده كحل شامل.
+
+---
+
+# 23. Cookie Security
+
+راجع:
+
+* HttpOnly
+* Secure
+* SameSite
+* Domain
+* Path
+* Expiration
+
+إذا:
+
+```text
+SameSite=None
+```
+
+ضروري، يجب وجود CSRF protection مناسب.
+
+---
+
+# 24. IP / Proxy Security
+
+لا تثق في:
+
+```text
+X-Forwarded-For
+X-Real-IP
+Location Headers
+```
+
+إلا من Trusted Proxy محدد.
+
+يجب تعريف:
+
+```text
+Trusted Proxy Topology
+```
+
+بوضوح.
+
+المستخدم لا يستطيع تزوير:
+
+* IP
+* Country
+* City
+* Timezone
+
+إذا كانت تستخدم في Security Decisions.
+
+---
+
+# 25. NVD / Scheduler Security
+
+NVD synchronization يجب ألا يعتمد دائمًا على Manus Heartbeat.
+
+أنشئ:
+
+```text
+SchedulerProvider
+```
+
+يدعم مستقبلًا:
+
+```text
+Manus Scheduler
+Linux Cron
+systemd
+External Scheduler
+```
+
+Scheduler endpoint يجب أن يكون:
+
+* Internal
+* Authenticated
+* Protected
+* Rate Limited
+
+ويفضل استخدام:
+
+* Strong Secret
+* Signed Requests
+* Replay Protection عند الحاجة
+
+مع:
+
+* Timeout
+* Retry
+* Logging
+* Duplicate Execution Protection
+* Concurrency Control
+
+---
+
+# 26. CVE Export Security
+
+راجع:
+
+```text
+cves.export
+```
+
+يجب إضافة:
+
+* Pagination
+* Maximum Records
+* Authorization عند الحاجة
+* Rate Limiting
+* Query Limits
+* Export Limits
+
+ممنوع Database Dump عبر endpoint.
+
+---
+
+# 27. Error Handling
+
+ممنوع للمستخدم النهائي ظهور:
+
+* Stack Traces
+* SQL Errors
+* Database Details
+* Internal Paths
+* API Keys
+* Provider Secrets
+* Internal URLs
+* Infrastructure Details
+
+Logs الداخلية يمكن أن تكون أكثر تفصيلًا ولكن بدون Secrets.
+
+---
+
+# 28. Logging & Audit
+
+Security Audit Logging للأحداث:
+
+* Login
+* Logout
+* Failed Login
+* Privilege Changes
+* Admin Actions
+* Profile Security Changes
+* Suspicious AI Usage
+* Upload Abuse
+* Account Changes
+* Security Actions
+
+ممنوع Logging لـ:
+
+* Passwords
+* Tokens
+* API Keys
+* Authorization Headers
+* Session Cookies
+
+---
+
+# 29. Secrets Management
+
+ممنوع:
+
+```text
+API Keys داخل Source Code
+JWT Secrets داخل Git
+DB Password داخل Source
+Provider Keys داخل Frontend
+Secrets داخل Logs
+```
+
+استخدم:
+
+```text
+Environment Variables
+Secret Manager
+```
+
+راجع Git History.
+
+إذا تم العثور على Secret حقيقي كان Exposed:
+
+> **ROTATE IT**
+
+حذفه من آخر Commit فقط لا يكفي.
+
+---
+
+# 30. Manus Dependency Inventory
+
+صنف كل Manus dependency:
+
+### 1. AI
+
+### 2. Storage
+
+### 3. Scheduler / Heartbeat
+
+### 4. Notifications
+
+### 5. Runtime
+
+### 6. Development Tooling
+
+أي Manus helper غير مستخدم:
+
+**حدد أنه unused أولًا ثم احذفه.**
+
+يجب إزالة hardcoded:
+
+```text
+https://forge.manus.im
+```
+
+من Critical Runtime Paths إذا لم يعد مطلوبًا.
+
+---
+
+# 31. Debug Collector Security
+
+Manus Debug Collector:
+
+* لا يعمل في Production.
+* لا يكون Public.
+* لا يسجل Request Bodies الحساسة.
+* لا يسجل Response Bodies الحساسة.
+* لا يسجل Authorization Headers.
+* لا يسجل Cookies.
+* لا يسجل API Keys.
+* إزالة Debug Logs القديمة من repository.
+* عدم expose development server للإنترنت.
+
+---
+
+# 32. SSRF Protection
+
+أي Feature تستقبل URL من المستخدم يجب مراجعتها.
+
+مثل:
+
+* Audio URL
+* Image URL
+* Webhook URL
+* Import URL
+* Remote File URL
+
+ممنوع Backend يطلب عشوائيًا:
+
+```text
+localhost
+127.0.0.1
+Private IPs
+Cloud Metadata
+Internal Services
+```
+
+استخدم:
+
+**Allowlist where possible.**
+
+---
+
+# 33. Security Monitoring & Intrusion Detection
+
+إضافة Security Monitoring Layer كاملة داخل CyberJocx.
+
+الهدف:
+
+```text
+Detect
+ ↓
+Analyze
+ ↓
+Score
+ ↓
+Alert
+ ↓
+Investigate
+ ↓
+Respond
+```
+
+---
+
+# 34. Dedicated Security Operations Role
+
+**مهم جدًا: Security Monitoring لا يكون تحت Admin العادي.**
+
+أنشئ Role مستقل:
+
+```text
+SECURITY_ANALYST
+```
+
+ويكون منفصلًا عن:
+
+```text
+SUPER_ADMIN
+PLATFORM_ADMIN
+MODERATOR
+USER
+```
+
+مستقبلًا يمكن دعم:
+
+```text
+SOC_ANALYST_L1
+SOC_ANALYST_L2
+SECURITY_ENGINEER
+INCIDENT_RESPONDER
+```
+
+---
+
+# 35. Security Analyst Permissions
+
+Security Analyst يستطيع:
+
+* View Security Events
+* View Suspicious IPs
+* View Suspicious Users
+* Investigate Incidents
+* View Attack Timeline
+* Acknowledge Alerts
+* Resolve Incidents
+* Temporary IP Block
+* Unblock IP
+* Revoke Sessions
+* Force Logout
+* Increase Monitoring
+* Mark False Positive
+* Add Investigation Notes
+* View Security Audit Logs
+
+لكن لا يستطيع:
+
+* Change Super Admin
+* Promote himself
+* Change Admin Roles
+* Modify AI Secrets
+* Modify Database Configuration
+* Delete Security Logs
+* Permanently Delete Accounts
+* Change Critical Platform Configuration
+
+---
+
+# 36. Security Center
+
+داخل CyberJocx:
+
+```text
+Admin Area
+    ↓
+Security Center
+```
+
+لكن الوصول للـSecurity Center يكون:
+
+```text
+Security Analyst
+Super Admin
+```
+
+حسب RBAC.
+
+يحتوي:
+
+* Security Overview
+* Live Events
+* Suspicious IPs
+* Suspicious Users
+* Attack Attempts
+* Failed Authentication
+* Rate Limit Violations
+* Injection Attempts
+* Unauthorized Access
+* AI Abuse
+* Upload Abuse
+* Account Takeover Indicators
+* Incidents
+* Audit Logs
+
+---
+
+# 37. Real-Time Security Event Detection
+
+راقب:
+
+### Authentication
+
+* Brute Force
+* OAuth Abuse
+* Invalid OAuth State
+* Session Abuse
+* Suspicious Login Patterns
+* Account Takeover Indicators
+
+### Authorization
+
+* IDOR
+* BOLA
+* Privilege Escalation
+* Unauthorized Resource Access
+* Admin Endpoint Probing
+
+### API
+
+* Excessive Requests
+* Endpoint Enumeration
+* Repeated 401/403
+* Parameter Tampering
+* Unexpected HTTP Methods
+
+### Injection Indicators
+
+Detect indicators of:
+
+* SQL Injection
+* NoSQL Injection
+* Command Injection
+* LDAP Injection
+* Template Injection
+* Path Traversal
+
+إذا technology تستخدم النوع المعني.
+
+**لا تعتمد على مجرد وجود كلمة مثل `SELECT` أو `DROP` وحدها للحكم على أن المستخدم مهاجم.**
+
+---
+
+# 38. IP Security Intelligence
+
+لكل Security Event:
+
+```text
+IP
+Country
+City
+First Seen
+Last Seen
+Risk Score
+Attack Count
+Failed Login Count
+Blocked Requests
+Associated Accounts
+```
+
+بشرط أن الـIP نفسه موثوق من Trusted Proxy.
+
+لا تخزن:
+
+```text
+Latitude
+Longitude
+```
+
+إلا إذا كانت هناك ضرورة حقيقية.
+
+---
+
+# 39. IP Risk Scoring
+
+كل IP يحصل على:
+
+```text
+0-20    Normal
+21-40   Low
+41-60   Suspicious
+61-80   High
+81-100  Critical
+```
+
+Risk Score يعتمد على:
+
+* Failed Authentication
+* Unauthorized Access
+* Injection Indicators
+* Rate Limit Violations
+* Endpoint Scanning
+* Upload Abuse
+* AI Abuse
+* Repeated 401/403
+* Multiple Suspicious Accounts
+* Abnormal Request Frequency
+
+**IP وحده ليس دليلًا قطعيًا على هوية المهاجم.**
+
+---
+
+# 40. Attack Detection Rules
+
+Security Rules قابلة للتعديل.
+
+مثال:
+
+```text
+BRUTE_FORCE_LOGIN
+
+10 failed attempts
+from same IP
+within 5 minutes
+
+→ Risk +30
+→ Security Event
+→ Temporary Rate Limit
+→ Alert
+```
+
+مثال:
+
+```text
+IDOR_ATTEMPT
+
+Repeated unauthorized resource access
+
+→ Risk +40
+→ High Severity
+→ Alert Security Analyst
+```
+
+مثال:
+
+```text
+INJECTION_ATTEMPT
+
+Suspicious input pattern
+on sensitive endpoint
+
+→ Risk +50
+→ Security Event
+→ Protection
+```
+
+---
+
+# 41. Automated Response
+
+### LOW
+
+```text
+Log
+```
+
+### MEDIUM
+
+```text
+Enhanced Monitoring
+Stricter Rate Limit
+```
+
+### HIGH
+
+```text
+Temporary Throttling
+Session Re-authentication عند الحاجة
+Alert
+```
+
+### CRITICAL
+
+```text
+Temporary IP Block
+Session Revocation
+Security Alert
+Incident Creation
+```
+
+ممنوع Permanent IP Ban تلقائيًا بناءً على Event واحد.
+
+يجب حماية النظام من:
+
+* False Positives
+* NAT
+* VPN
+* Mobile Networks
+* Corporate Proxies
+* Shared IPs
+
+---
+
+# 42. Security Alerts
+
+مثال:
+
+```text
+🚨 CRITICAL SECURITY EVENT
+
+Possible SQL Injection
+
+IP:
+xxx.xxx.xxx.xxx
+
+Endpoint:
+/api/...
+
+Attempts:
+17
+
+Risk:
+92/100
+
+Status:
+ACTIVE
+```
+
+Security Analyst يستطيع:
+
+* Acknowledge
+* Investigate
+* Block IP
+* Unblock IP
+* Revoke Sessions
+* Disable Account حسب صلاحياته
+* Mark False Positive
+* Create Incident
+* Add Notes
+
+---
+
+# 43. Security Incident Management
+
+الأحداث يمكن تجميعها في:
+
+```text
+Security Incident
+```
+
+مثال:
+
+```text
+Incident #CYB-2026-00021
+
+Type:
+Possible Account Takeover
+
+Severity:
+HIGH
+
+Related IPs:
+...
+
+Related Users:
+...
+
+Events:
+37
+
+Status:
+OPEN
+```
+
+Statuses:
+
+```text
+OPEN
+INVESTIGATING
+CONTAINED
+RESOLVED
+FALSE_POSITIVE
+```
+
+مع:
+
+* Timeline
+* Related Events
+* Notes
+* Actions
+* Resolution Reason
+
+---
+
+# 44. Honeypot / Canary Endpoints
+
+يمكن إنشاء Resources وهمية آمنة لا تحتوي على أسرار حقيقية.
+
+أي وصول إليها يعتبر:
+
+**High-Confidence Suspicious Event**
+
+ولا يتم كشفها بشكل يجعلها سهلة الاكتشاف.
+
+---
+
+# 45. Security Audit Log
+
+Security Audit Log منفصل عن Application Logs.
+
+يسجل:
+
+```text
+Event ID
+Timestamp
+Event Type
+Severity
+IP
+User ID إن وجد
+Endpoint
+HTTP Method
+Result
+Risk Score
+Request ID
+Action Taken
+```
+
+بدون:
+
+* Passwords
+* JWTs
+* Cookies
+* API Keys
+* Authorization Headers
+* Sensitive Request Bodies
+
+---
+
+# 46. Request Correlation ID
+
+كل Request مهم يحصل على:
+
+```text
+Request ID
+```
+
+مثال:
+
+```text
+CYB-REQ-8F72A91
+```
+
+يمكن ربط:
+
+```text
+Request
+ ↓
+API Log
+ ↓
+Security Event
+ ↓
+Database Operation
+ ↓
+AI Operation
+```
+
+بدون تخزين البيانات الحساسة.
+
+---
+
+# 47. Security Risk Engine
+
+Severity لا تعتمد على Attack Type فقط.
+
+تأخذ في الاعتبار:
+
+```text
+Attack Type
++
+Frequency
++
+Target
++
+User Privilege
++
+Previous Events
++
+Risk Score
+```
+
+محاولة واحدة ≠ مئات المحاولات.
+
+---
+
+# 48. Admin Security Action Protection
+
+كل Security Action حساس يحتاج:
+
+* RBAC
+* Server-side Authorization
+* Audit Logging
+* Re-authentication عند الحاجة
+
+أمثلة:
+
+```text
+BLOCK_IP
+UNBLOCK_IP
+REVOKE_SESSION
+DISABLE_ACCOUNT
+```
+
+كل Action يجب تسجيل:
+
+```text
+Actor
+Target
+Action
+Reason
+Timestamp
+Request ID
+```
+
+---
+
+# 49. Protection Against Security Analyst Abuse
+
+حتى Security Analyst نفسه لا يملك Unlimited Power.
+
+يجب الفصل بين:
+
+```text
+VIEW_SECURITY_EVENTS
+```
+
+و:
+
+```text
+EXECUTE_SECURITY_ACTIONS
+```
+
+حسب Role.
+
+Critical actions يمكن أن تحتاج:
+
+**Super Admin Approval**
+
+مستقبلًا.
+
+---
+
+# 50. Security Monitoring Anti-DoS
+
+المهاجم لا يستطيع إغراق Security Logs.
+
+استخدم:
+
+* Event Rate Limiting
+* Deduplication
+* Aggregation
+* Sampling عند الحاجة
+* Queue Limits
+* Storage Limits
+
+مثال:
+
+بدل:
+
+```text
+100,000 identical records
+```
+
+يمكن تسجيل:
+
+```text
+Attack Pattern
+IP
+Attempts: 100,000
+First Seen
+Last Seen
+```
+
+مع الاحتفاظ بالأدلة اللازمة للتحقيق.
+
+---
+
+# 51. Security Monitoring Health
+
+Security Center يعرض:
+
+```text
+Security Monitoring    🟢
+Event Processing       🟢
+Rate Limiter           🟢
+Audit Logger           🟢
+Alert Engine           🟢
+```
+
+إذا توقف أي component:
+
+```text
+🔴 SECURITY MONITORING DEGRADED
+```
+
+ويتم إنشاء Alert.
+
+---
+
+# 52. Security Event Abstraction
+
+أنشئ:
+
+```text
+SecurityEventService
+```
+
+مسؤول عن:
+
+```text
+recordEvent()
+calculateRisk()
+createIncident()
+triggerAlert()
+applyResponse()
+```
+
+لا تضع Detection Logic داخل كل Endpoint بشكل منفصل.
+
+Architecture:
+
+```text
+Request
+ ↓
+Security Middleware
+ ↓
+Endpoint
+ ↓
+SecurityEventService
+ ↓
+Risk Engine
+ ↓
+Alert / Response
+```
+
+---
+
+# 53. SIEM Ready
+
+Security Events يجب أن تكون في Schema موحد.
+
+يجب أن يكون قابلًا للتصدير مستقبلًا إلى:
+
+* Wazuh
+* Elastic
+* OpenSearch
+* Splunk
+* Microsoft Sentinel
+* أي SIEM
+
+بحيث يكون:
+
+**CyberJocx Built-in Security Monitoring + External SIEM Ready**
+
+---
+
+# 54. Security Monitoring Privacy
+
+Security Monitoring لا يعني جمع كل شيء.
+
+طبق:
+
+**Data Minimization**
+
+لا تخزن إلا البيانات المطلوبة للتحقيق الأمني.
+
+حدد:
+
+* What is collected
+* Why it is collected
+* Who can access it
+* Retention period
+* Deletion policy
+
+Sensitive evidence يجب أن تكون:
+
+* Sanitized
+* Access Controlled
+* Encrypted where appropriate
+
+---
+
+# 55. IP Blocking Safety
+
+IP Blocking يجب ألا يكون Blind.
+
+قبل Block طويل:
+
+* Correlate Events
+* Check frequency
+* Check affected accounts
+* Check false-positive indicators
+* Check shared-network possibility
+
+Temporary block هو default.
+
+Permanent blocking يحتاج:
+
+**Explicit Security Policy / Higher Privilege**
+
+---
+
+# 56. Authentication Monitoring
+
+راقب:
+
+```text
+Failed Login Rate
+Successful Login After Failures
+Multiple Accounts From Same IP
+Multiple IPs For Same Account
+Session Revocations
+Repeated Invalid Tokens
+OAuth Abuse
+```
+
+والهدف اكتشاف:
+
+* Brute Force
+* Credential Stuffing
+* Account Takeover
+* Session Abuse
+
+---
+
+# 57. Account Risk Score
+
+بالإضافة إلى IP Risk Score، يمكن أن يكون هناك:
+
+```text
+User Risk Score
+```
+
+يعتمد على:
+
+* Suspicious login behavior
+* Unauthorized access attempts
+* Abnormal activity
+* AI abuse
+* Upload abuse
+* Multiple security events
+
+لكن لا يتم تعطيل المستخدم تلقائيًا اعتمادًا على Score فقط بدون safeguards مناسبة.
+
+---
+
+# 58. Security Testing
+
+بعد كل مجموعة Security Fixes:
+
+1. TypeScript Check
+2. Unit Tests
+3. Integration Tests
+4. Authentication Tests
+5. Authorization Tests
+6. Negative Tests
+7. Rate Limit Tests
+8. Upload Tests
+9. AI Abuse Tests
+10. Security Monitoring Tests
+11. Regression Tests
+
+كل Vulnerability يتم إصلاحها يجب إضافة Regression Test لها عند الإمكان.
+
+---
+
+# 59. Security Regression Matrix
+
+### Authentication
+
+```text
+[ ] Login works
+[ ] Invalid OAuth state rejected
+[ ] Invalid session rejected
+[ ] Expired session rejected
+[ ] Logout invalidates session
+```
+
+### Authorization
+
+```text
+[ ] User cannot access private data of another user
+[ ] User cannot modify another user's profile
+[ ] User cannot promote himself
+[ ] User cannot become Admin
+[ ] User cannot access Admin procedures
+[ ] User cannot access Security Center
+```
+
+### Upload
+
+```text
+[ ] Oversized file rejected
+[ ] Fake MIME rejected
+[ ] Invalid magic bytes rejected
+[ ] Unauthorized upload rejected
+```
+
+### AI
+
+```text
+[ ] Unauthenticated AI rejected
+[ ] Oversized prompt rejected
+[ ] Rate limit triggered
+[ ] User quota triggered
+[ ] Timeout handled
+[ ] Provider failure handled safely
+```
+
+### Database
+
+```text
+[ ] SQL Injection attempts handled safely
+[ ] Duplicate likes prevented
+[ ] Duplicate follows prevented
+[ ] Invalid IDs rejected
+```
+
+### Security Monitoring
+
+```text
+[ ] Suspicious event generated
+[ ] Risk score calculated
+[ ] Alert generated
+[ ] Incident created
+[ ] IP tracked
+[ ] Analyst can investigate
+[ ] Unauthorized analyst action rejected
+[ ] Security logs cannot be flooded
+```
+
+---
+
+# 60. Backup
+
+قبل أي Major Security Migration:
+
+Backup كامل:
+
+```text
+Source
+Database
+Uploaded Files
+Environment/Secrets Inventory
+```
+
+لكن:
+
+**Raw Secrets لا توضع داخل Backup غير مشفر.**
+
+يجب اختبار:
+
+```text
+Backup → Restore
+```
+
+فعليًا.
+
+---
+
+# 61. Disaster Recovery
+
+يجب أن أستطيع تشغيل CyberJocx على Server جديد:
+
+```text
+New Server
+ ↓
+Clone Repository
+ ↓
+Configure Environment
+ ↓
+Restore Database
+ ↓
+Restore Storage
+ ↓
+Start Application
+ ↓
+CyberJocx Online
+```
+
+يجب توثيق العملية بالكامل.
+
+---
+
+# 62. Infrastructure Independence
+
+الـTarget Architecture:
+
+```text
+Cloudflare
+    ↓
+Nginx
+    ↓
+Node / Express
+    ↓
+MySQL
+    ↓
+S3 / R2 / MinIO
+    ↓
+AI Provider / Local AI
+    ↓
+Cron / Scheduler
+```
+
+بدون اعتماد إجباري على Manus.
+
+---
+
+# 63. Domain & Cloudflare
+
+Domain يجب أن يكون مملوكًا لحساب مالك CyberJocx.
+
+DNS تحت تحكم المالك.
+
+استخدم:
+
+* HTTPS
+* DNS
+* CDN عند الحاجة
+* DDoS Protection
+* WAF / Security Rules
+
+Domain ownership لا يعتمد على Manus.
+
+---
+
+# 64. Local AI Server Security
+
+إذا استخدمنا جهاز شخصي:
+
+ممنوع:
+
+```text
+Internet
+ ↓
+Ollama:11434
+```
+
+الصحيح:
+
+```text
+Internet
+ ↓
+Secure HTTPS Gateway / Tunnel
+ ↓
+Authentication
+ ↓
+AI Gateway
+ ↓
+Ollama
+```
+
+ويجب:
+
+* Firewall
+* OS Updates
+* Dedicated AI User
+* No Root/Admin Execution
+* Strong Authentication
+* Rate Limiting
+* Request Limits
+* Timeout
+* Monitoring
+* Automatic Restart
+
+يفضل فصل:
+
+```text
+AI Server
+```
+
+عن:
+
+```text
+Database Server
+```
+
+---
+
+# 65. Local AI Secrets
+
+لا تخزن على AI Machine إلا الـSecrets المطلوبة فعليًا.
+
+لا يتم وضع:
+
+* Database Password
+* Full CyberJocx Secrets
+* Admin Credentials
+* Unnecessary API Keys
+
+على جهاز الـAI.
+
+---
+
+# 66. Local AI Availability
+
+إذا AI Server Offline:
+
+```text
+AI Offline
+ ↓
+Provider Failure Handler
+ ↓
+Fallback Provider / Graceful Error
+```
+
+ولا يتوقف:
+
+* Authentication
+* Courses
+* Community
+* CVE
+* Profiles
+* Admin
+* Database
+
+بسبب AI.
+
+---
+
+# 67. No Breaking Changes
+
+بعد كل Security Fix:
+
+* Existing Features continue working
+* UI remains functional
+* Existing Users remain
+* Existing Posts remain
+* Existing Courses remain
+* Existing Progress remains
+* Existing CVEs remain
+* Existing Community Data remains
+* Existing Uploads remain
+
+Database migrations يجب أن تكون موثقة وقابلة للرجوع حيثما أمكن.
+
+---
+
+# 68. Security Development Workflow
+
+أي Security Change:
+
+```text
+Inspect
+ ↓
+Threat Model
+ ↓
+Implement Minimal Fix
+ ↓
+Test
+ ↓
+Regression Test
+ ↓
+Security Review
+ ↓
+Document
+```
+
+ممنوع إجراء تغييرات كبيرة عشوائية على Architecture.
+
+---
+
+# 69. AI Provider Strategy
+
+### Development
+
+```text
+Local AI / Free API
+```
+
+### Early Production
+
+```text
+Gemini
+OpenRouter
+Local AI
+```
+
+### Growth
+
+```text
+Pay-as-you-go Provider
+```
+
+### Fallback
+
+```text
+Another Provider
+```
+
+تغيير provider يجب أن يكون:
+
+**Configuration Change**
+
+وليس Rewrite.
+
+---
+
+# 70. Final Security Gate
+
+لا تعتبر CyberJocx Secure لمجرد:
+
+* Helmet added
+* JWT exists
+* Zod exists
+* SQL Injection غير واضح
+
+يجب اختبار:
+
+```text
+Authentication
+Authorization
+IDOR
+BOLA
+Input Validation
+SQL Injection
+XSS
+CSRF
+SSRF
+File Upload
+Rate Limiting
+AI Abuse
+Privacy Leakage
+Session Security
+Database Integrity
+Secrets
+Backups
+Recovery
+Security Monitoring
+Incident Response
+Infrastructure
+```
+
+---
+
+# 71. Final Independence Test
+
+يجب تشغيل نسخة Clean من CyberJocx بدون Manus Credentials أو Manus Services.
+
+Remove/Replace:
+
+```text
+Manus OAuth
+Manus Forge AI
+Manus Storage
+Manus Heartbeat
+Manus Notification Dependency إذا لم تكن ضرورية
+Manus Runtime Dependency
+Manus Debug Collector
+```
+
+ثم اختبار:
+
+```text
+[ ] Google Login
+[ ] Database
+[ ] Profiles
+[ ] Community
+[ ] Courses
+[ ] CVE
+[ ] AI
+[ ] Uploads
+[ ] Admin
+[ ] Notifications
+[ ] Scheduler
+[ ] Security Center
+[ ] Security Monitoring
+```
+
+أي Feature تفشل يجب تحديد سببها وعدم إخفاء المشكلة.
+
+الهدف النهائي:
+
+> **CyberJocx can run without Manus.**
+
+---
+
+# 72. Final Definition of Done
+
+```text
+[ ] No known Critical Authorization vulnerability.
+
+[ ] No known Critical Authentication vulnerability.
+
+[ ] No known Critical IDOR/BOLA vulnerability.
+
+[ ] Public profiles do not leak private/internal fields.
+
+[ ] AI API keys are never exposed to frontend.
+
+[ ] AI has rate limiting.
+
+[ ] AI has per-user quotas.
+
+[ ] AI has prompt/output limits.
+
+[ ] Uploads have real validation.
+
+[ ] API endpoints have proper authorization.
+
+[ ] Expensive endpoints have limits.
+
+[ ] Database has required unique constraints.
+
+[ ] Sensitive operations use transactions where required.
+
+[ ] Sessions have reasonable expiration.
+
+[ ] Session revocation strategy implemented.
+
+[ ] CSRF strategy implemented.
+
+[ ] Security headers implemented.
+
+[ ] Secrets removed from source.
+
+[ ] Exposed secrets rotated.
+
+[ ] Git history reviewed.
+
+[ ] Backups exist.
+
+[ ] Restore has been tested.
+
+[ ] Manus dependencies documented.
+
+[ ] Storage abstraction implemented.
+
+[ ] AI Provider abstraction implemented.
+
+[ ] Scheduler abstraction implemented.
+
+[ ] Local AI supported as optional provider.
+
+[ ] Local AI is not publicly exposed.
+
+[ ] Security Center implemented.
+
+[ ] Dedicated Security Analyst role implemented.
+
+[ ] Security Analyst permissions isolated.
+
+[ ] Real-time security event monitoring implemented.
+
+[ ] IP monitoring implemented.
+
+[ ] IP risk scoring implemented.
+
+[ ] User risk scoring implemented where appropriate.
+
+[ ] Injection detection implemented.
+
+[ ] IDOR/BOLA detection implemented.
+
+[ ] Brute-force detection implemented.
+
+[ ] AI abuse monitoring implemented.
+
+[ ] Upload abuse monitoring implemented.
+
+[ ] Security alerts implemented.
+
+[ ] Security incidents implemented.
+
+[ ] Automated response safeguards implemented.
+
+[ ] Security actions audited.
+
+[ ] Security logs protected against flooding.
+
+[ ] Request correlation IDs implemented.
+
+[ ] Security monitoring health checks implemented.
+
+[ ] SIEM-ready SecurityEvent schema implemented.
+
+[ ] Security regression tests implemented.
+
+[ ] Disaster recovery documented.
+
+[ ] CyberJocx can eventually run independently from Manus.
+```
+
+---
+
+# 🏁 Final Architecture Goal
+
+في النهاية CyberJocx المفروض يبقى بالشكل ده:
+
+```text
+                         INTERNET
+                            │
+                            ▼
+                    ┌───────────────┐
+                    │  Cloudflare   │
+                    │  WAF / DDoS   │
+                    └───────┬───────┘
+                            │
+                            ▼
+                    ┌───────────────┐
+                    │ Nginx / Proxy │
+                    └───────┬───────┘
+                            │
+                            ▼
+                  ┌────────────────────┐
+                  │  CyberJocx Backend │
+                  └─────────┬──────────┘
+                            │
+             ┌──────────────┼──────────────┐
+             │              │              │
+             ▼              ▼              ▼
+        Authentication  Authorization   Validation
+             │              │              │
+             └──────────────┼──────────────┘
+                            │
+                            ▼
+                  ┌──────────────────┐
+                  │ Security Engine  │
+                  └────────┬─────────┘
+                           │
+            ┌──────────────┼──────────────┐
+            ▼              ▼              ▼
+        Detection      Risk Engine    Rate Limit
+            │              │              │
+            └──────────────┼──────────────┘
+                           ▼
+                  ┌─────────────────┐
+                  │ Security Center │
+                  └────────┬────────┘
+                           │
+                    ┌──────┴──────┐
+                    ▼             ▼
+             Security Analyst   Super Admin
+                    │
+              Investigation
+                    │
+             Incident Response
+                           
+                           
+        ┌────────────────────────────────────┐
+        │            Providers               │
+        ├────────────────────────────────────┤
+        │ MySQL                              │
+        │ S3 / R2 / MinIO                    │
+        │ Ollama / Gemini / Grok / OpenAI    │
+        │ Cron / systemd / External Scheduler│
+        └────────────────────────────────────┘
+```
+
+**والنقطة الأهم:** الـSecurity Analyst هنا مش مجرد User عنده صفحة زيادة. هو **Security Operations Role مستقل**، والـSecurity Engine يراقب CyberJocx حتى لو الـAnalyst مش فاتح الـDashboard، بينما الـAnalyst يتولى التحقيق والاستجابة. ده يخلي التصميم أقرب فعلًا إلى **Mini SOC داخل CyberJocx**، مع فصل واضح بين تشغيل المنصة وحمايتها.
