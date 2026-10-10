@@ -1,0 +1,46 @@
+services:
+  target:
+    build:
+      context: ./target
+    container_name: cjx-target-01
+    networks:
+      lab_net:
+        ipv4_address: 172.30.0.10
+    mem_limit: 384m
+    cpus: 0.5
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+  attacker:
+    build:
+      context: ./attacker
+    container_name: cjx-attacker-01
+    networks:
+      lab_net:
+        ipv4_address: 172.30.0.20
+    mem_limit: 512m
+    cpus: 1.0
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+networks:
+  lab_net:
+    name: cjx-lab-01
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
